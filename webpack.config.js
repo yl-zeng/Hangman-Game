@@ -2,16 +2,23 @@
     ./webpack.config.js
 */
 const path = require('path');
+
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/app.jsx',
   output: {
     path: path.resolve('public'),
     filename: 'bundle.js'
   },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
+      {
+      loader:'babel-loader',
+      query:{
+        presets:['react','es2015','stage-0']
+      },
+      test:/\.jsx?$/,
+      exclude:/(node_modules|bower_components)/
+    }
     ]
   }
 }
