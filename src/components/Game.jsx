@@ -16,11 +16,13 @@ export default class Welcome extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="input-group">
-            <span className="input-group-btn">
-              <button className="btn btn-secondary" type="button">Go!</button>
-            </span>
-            <input type="text" className="form-control" placeholder="One Letter..."/>
+          <div className="col-sm-2 col-sm-offset-5">
+            <div className="input-group">
+              <span className="input-group-btn">
+                <button className="btn btn-secondary" type="button">Go!</button>
+              </span>
+              <input type="text" className="form-control" placeholder="One Letter..."/>
+            </div>
           </div>
         </div>
       </div>

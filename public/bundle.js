@@ -27724,17 +27724,21 @@ var Welcome = function (_React$Component) {
           { className: "row" },
           _react2.default.createElement(
             "div",
-            { className: "input-group" },
+            { className: "col-sm-2 col-sm-offset-5" },
             _react2.default.createElement(
-              "span",
-              { className: "input-group-btn" },
+              "div",
+              { className: "input-group" },
               _react2.default.createElement(
-                "button",
-                { className: "btn btn-secondary", type: "button" },
-                "Go!"
-              )
-            ),
-            _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "One Letter..." })
+                "span",
+                { className: "input-group-btn" },
+                _react2.default.createElement(
+                  "button",
+                  { className: "btn btn-secondary", type: "button" },
+                  "Go!"
+                )
+              ),
+              _react2.default.createElement("input", { type: "text", className: "form-control", placeholder: "One Letter..." })
+            )
           )
         )
       );
@@ -27786,7 +27790,7 @@ exports = module.exports = __webpack_require__(242)(undefined);
 
 
 // module
-exports.push([module.i, "* {\r\n  box-sizing: border-box;\r\n}\r\n\r\n.start-button {\r\n  width: 10%;\r\n  margin-top: 5%;\r\n}\r\n\r\n\r\nbody {\r\n  padding-bottom: 40px;\r\n  color: #5a5a5a;\r\n}\r\n\r\n\r\n/* CUSTOMIZE THE NAVBAR\r\n-------------------------------------------------- */\r\n\r\n/* Special class on .container surrounding .navbar, used for positioning it into place. */\r\n.navbar-wrapper {\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  left: 0;\r\n  z-index: 20;\r\n}\r\n\r\n/* Flip around the padding for proper display in narrow viewports */\r\n.navbar-wrapper > .container {\r\n  padding-right: 0;\r\n  padding-left: 0;\r\n}\r\n.navbar-wrapper .navbar {\r\n  padding-right: 15px;\r\n  padding-left: 15px;\r\n}\r\n.navbar-wrapper .navbar .container {\r\n  width: auto;\r\n}\r\n\r\n\r\n/* CUSTOMIZE THE CAROUSEL\r\n-------------------------------------------------- */\r\n\r\n/* Carousel base class */\r\n.carousel {\r\n  height: 500px;\r\n  margin-bottom: 60px;\r\n}\r\n/* Since positioning the image, we need to help out the caption */\r\n.carousel-caption {\r\n  z-index: 10;\r\n}\r\n\r\n/* Declare heights because of positioning of img element */\r\n.carousel .item {\r\n  height: 500px;\r\n  background-color: #777;\r\n}\r\n.carousel-inner > .item > img {\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  min-width: 100%;\r\n  height: 500px;\r\n}\r\n\r\n\r\n/* MARKETING CONTENT\r\n-------------------------------------------------- */\r\n\r\n/* Center align the text within the three columns below the carousel */\r\n.marketing .col-lg-4 {\r\n  margin-bottom: 20px;\r\n  text-align: center;\r\n}\r\n.marketing h2 {\r\n  font-weight: normal;\r\n}\r\n.marketing .col-lg-4 p {\r\n  margin-right: 10px;\r\n  margin-left: 10px;\r\n}\r\n\r\n\r\n/* Featurettes\r\n------------------------- */\r\n\r\n.featurette-divider {\r\n  margin: 80px 0; /* Space out the Bootstrap <hr> more */\r\n}\r\n\r\n/* Thin out the marketing headings */\r\n.featurette-heading {\r\n  font-weight: 300;\r\n  line-height: 1;\r\n  letter-spacing: -1px;\r\n}\r\n\r\n\r\n/* RESPONSIVE CSS\r\n-------------------------------------------------- */\r\n\r\n@media (min-width: 768px) {\r\n  /* Navbar positioning foo */\r\n  .navbar-wrapper {\r\n    margin-top: 20px;\r\n  }\r\n  .navbar-wrapper .container {\r\n    padding-right: 15px;\r\n    padding-left: 15px;\r\n  }\r\n  .navbar-wrapper .navbar {\r\n    padding-right: 0;\r\n    padding-left: 0;\r\n  }\r\n\r\n  /* The navbar becomes detached from the top, so we round the corners */\r\n  .navbar-wrapper .navbar {\r\n    border-radius: 4px;\r\n  }\r\n\r\n  /* Bump up size of carousel content */\r\n  .carousel-caption p {\r\n    margin-bottom: 20px;\r\n    font-size: 21px;\r\n    line-height: 1.4;\r\n  }\r\n\r\n  .featurette-heading {\r\n    font-size: 50px;\r\n  }\r\n}\r\n\r\n@media (min-width: 992px) {\r\n  .featurette-heading {\r\n    margin-top: 120px;\r\n  }\r\n}\r\n", ""]);
+exports.push([module.i, "* {\r\n  box-sizing: border-box;\r\n}\r\n\r\n.start-button {\r\n  width: 10%;\r\n  margin-top: 5%;\r\n}\r\n\r\n\r\nbody {\r\n  padding-bottom: 40px;\r\n  color: #5a5a5a;\r\n}\r\n", ""]);
 
 // exports
 
