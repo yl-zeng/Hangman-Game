@@ -9,16 +9,23 @@ module.exports = {
     path: path.resolve('public'),
     filename: 'bundle.js'
   },
+  resolve: {
+    alias: {
+      Components: path.resolve("src/components"),
+      Styles: path.resolve("src/styles")
+    }
+  },
   module: {
-    loaders: [
-      {
+    rules: [{
       loader:'babel-loader',
       query:{
         presets:['react','es2015','stage-0']
       },
       test:/\.jsx?$/,
       exclude:/(node_modules|bower_components)/
-    }
-    ]
+    }, {
+      test: /\.css$/,
+      use: [ 'style-loader', 'css-loader' ]
+    }]
   }
 }

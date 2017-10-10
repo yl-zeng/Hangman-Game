@@ -7,7 +7,7 @@ import {
   withRouter
 } from 'react-router-dom';
 import history from "./../history/history.jsx";
-import Welcome from "./../component/Welcome.jsx";
+import Welcome from "Components/Welcome.jsx";
 
 
 export default (
