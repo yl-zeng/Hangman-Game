@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 var app = express();
 const PORT = process.env.PORT || 3000;
 var {generateWord} = require("./utils/util");
+var {Word} = require("./db/db");
 
 
 app.use(bodyParser.json());
@@ -38,7 +39,7 @@ app.post("/guess/:id", function(req, res) {
   }
 
   Word.findById(new ObjectId(id)).then((word) => {
-    word.guess(_.pick(req.body, "input")).then((updatedWord) => {
+    word.guess(req.body.input).then((updatedWord) => {
       res.status(200).send(updatedWord);
     }).catch((e) => {
       res.status(403).send();
