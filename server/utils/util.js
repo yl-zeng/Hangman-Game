@@ -13,12 +13,8 @@ var generateWord = function() {
   return Word.createWord(word);
 }
 
-// var guessWord = function(id, c) {
-//   
-// }
 
 
 module.exports = {
   generateWord,
-  guessWord
 };
