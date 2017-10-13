@@ -1,18 +1,24 @@
 var _ = require("lodash");
 
+var Word = require("./../db/db.js").Word;
+
 
 var generateWord = function() {
-  return new Promise((resolve, reject) => {
-    var word = "";
+  var word = "";
 
-    for(var i = 0; i < 7; i++) {
-      word += String.fromCharCode(_.random(65, 90));
-    }
+  for(var i = 0; i < 7; i++) {
+    word += String.fromCharCode(_.random(65, 90));
+  }
 
-    resolve("haha");
-  });
+  return Word.createWord(word);
 }
 
-generateWord().then((data) => {
-  console.log(data);
-});
+// var guessWord = function(id, c) {
+//   
+// }
+
+
+module.exports = {
+  generateWord,
+  guessWord
+};
