@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Link} from 'react-router-dom';
-import $ from 'jquery';
 
 export default class Game extends React.Component {
 
@@ -25,12 +24,12 @@ export default class Game extends React.Component {
     }
   }
 
-  createWord() {
+  createWord = () => {
     var curr = this;
 
     $.ajax({
-      url: "http://localhost:3000/word/",
-      method: "POST",
+      url: "/word/",
+      type: "POST",
       dataType: "json"
     }).done(function(data) {
       curr.setState({
@@ -46,12 +45,12 @@ export default class Game extends React.Component {
     });
   }
 
-  retrieveWord() {
+  retrieveWord = () => {
     var id = this.state.id;
     var curr = this;
     $.ajax({
-      url: "http://localhost:3000/word/" + id,
-      method: "GET",
+      url: "/word/" + id,
+      type: "GET",
       dataType: "json"
     }).done(function(data) {
       curr.setState({
@@ -64,6 +63,36 @@ export default class Game extends React.Component {
     });
   }
 
+  guessWord = (id, guess) => {
+    var curr = this;
+    console.log(guess);
+
+    $.ajax({
+      url: "/word/" + id,
+      type: "POST",
+      dataType: "json",
+      contentType: "application/json",
+      data: JSON.stringify(guess)
+    }).done(function(data) {
+      curr.setState({
+        showcase: data.showcase,
+        history: data.history,
+        count: data.count
+      })
+    }).fail(function() {
+      console.log("something wrong");
+    });
+  }
+
+  handleGuess = () => {
+    var id = this.state.id;
+    var data = {
+      guess: $("#guess").val()
+    };
+    $("#guess").val("");
+
+    this.guessWord(id, data);
+  }
 
   render() {
 
@@ -88,9 +117,9 @@ export default class Game extends React.Component {
           <div className="col-sm-2 col-sm-offset-5">
             <div className="input-group">
               <span className="input-group-btn">
-                <button className="btn btn-secondary" type="button">Go!</button>
+                <button className="btn btn-secondary" onClick={this.handleGuess} type="button">Go!</button>
               </span>
-              <input type="text" className="form-control" placeholder="One Letter..."/>
+              <input id="guess" type="text" className="form-control" placeholder="One Letter..."/>
             </div>
           </div>
         </div>

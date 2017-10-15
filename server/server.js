@@ -22,14 +22,20 @@ app.use(function (req, res, next){
 
 app.use(express.static('public'));
 
+
+// createWord
 app.post("/word", function(req, res) {
+
+  console.log("POST /word/ Create word");
   generateWord().then((word) => {
     res.status(200).send(word);
   }).catch((e) => {
-    res.status(404);
+    res.status(404).send();
   });
 });
 
+
+// retrieveWord
 app.get("/word/:id", function(req, res) {
   var id = req.params.id;
 
@@ -38,6 +44,8 @@ app.get("/word/:id", function(req, res) {
       err: "not found id"
     });
   }
+
+  console.log("GET /word/:id ID: " + id + " Retrieve Word ");
 
   Word.findById(new ObjectId(id)).then((word) => {
     res.status(200).send(_.pick(word, ["count", "showcase", "history"]));
@@ -48,6 +56,8 @@ app.get("/word/:id", function(req, res) {
   });
 });
 
+
+// guessWord
 app.post("/word/:id", function(req, res) {
   var id = req.params.id;
   if(!ObjectId.isValid(id)) {
@@ -56,8 +66,10 @@ app.post("/word/:id", function(req, res) {
     });
   }
 
+  console.log("POST /word/:id ID: " + id + " Guess " + req.body.guess);
+
   Word.findById(new ObjectId(id)).then((word) => {
-    return word.guess(req.body.input);
+    return word.guess(req.body.guess);
   }).then((updatedWord) => {
     res.status(200).send(_.pick(updatedWord,["count", "showcase", "history"]));
   }).catch((e) => {
