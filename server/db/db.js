@@ -24,7 +24,7 @@ wordSchema.statics.createWord = function(word) {
   var newWord = new Word({
     word,
     count: 0,
-    showcase: "_______",
+    showcase: "_ _ _ _ _ _ _ ",
     history: []
   });
 
@@ -46,9 +46,9 @@ wordSchema.methods.guess = function(c) {
 
   for(var i = 0; i < word.length; i++) {
     if(word[i] === C) {
-      newShowcase += C;
+      newShowcase += C + " ";
     }else {
-      newShowcase += "_";
+      newShowcase += "_ ";
     }
   }
 

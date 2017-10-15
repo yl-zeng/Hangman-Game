@@ -27705,7 +27705,7 @@ var Game = function (_React$Component) {
 
     _this.state = {
       id: id,
-      showcase: "_ _ _ _ _ _ _",
+      showcase: "_ _ _ _ _ _ _ ",
       history: [],
       count: 0
     };

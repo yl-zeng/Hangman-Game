@@ -11,7 +11,7 @@ export default class Game extends React.Component {
 
     this.state = {
       id,
-      showcase: "_ _ _ _ _ _ _",
+      showcase: "_ _ _ _ _ _ _ ",
       history: [],
       count: 0
     };
