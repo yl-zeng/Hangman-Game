@@ -7,7 +7,7 @@ var generateWord = function() {
   var word = "";
 
   for(var i = 0; i < 7; i++) {
-    word += String.fromCharCode(_.random(65, 90));
+    word += String.fromCharCode(_.random(65, 90)) + " ";
   }
 
   return Word.createWord(word);

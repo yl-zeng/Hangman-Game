@@ -30,7 +30,8 @@ export default class Game extends React.Component {
     $.ajax({
       url: "/word/",
       type: "POST",
-      dataType: "json"
+      dataType: "json",
+      contentType: "application/json"
     }).done(function(data) {
       curr.setState({
         id: data._id,
@@ -41,6 +42,7 @@ export default class Game extends React.Component {
         sessionStorage.setItem('hangmanId', data._id);
       });
     }).fail(function() {
+      console.log(err.responseText);
       console.log("something wrong");
     });
   }
@@ -51,15 +53,17 @@ export default class Game extends React.Component {
     $.ajax({
       url: "/word/" + id,
       type: "GET",
-      dataType: "json"
+      dataType: "json",
+      contentType: "application/json"
     }).done(function(data) {
       curr.setState({
         showcase: data.showcase,
         history: data.history,
         count: data.count
       })
-    }).fail(function() {
-      console.log("something wrong");
+    }).fail(function(err) {
+      console.log(err.responseText);
+      curr.createWord();
     });
   }
 
@@ -79,8 +83,8 @@ export default class Game extends React.Component {
         history: data.history,
         count: data.count
       })
-    }).fail(function() {
-      console.log("something wrong");
+    }).fail(function(err) {
+      console.log(err.responseText);
     });
   }
 
@@ -95,10 +99,15 @@ export default class Game extends React.Component {
   }
 
   render() {
+    var misses;
 
-    var misses = this.state.history.map((h) =>
-      <span>{" " + h + ","}</span>
-    );
+    if(this.state.history) {
+      misses = this.state.history.map((h) =>
+        <span>{" " + h + ","}</span>
+      );
+    } else {
+      misses = <span></span>;
+    }
 
     return (
       <div className="text-center">

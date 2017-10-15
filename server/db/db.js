@@ -41,18 +41,16 @@ wordSchema.methods.guess = function(c) {
   }
 
   curr.count += 1;
-  curr.history.push(c);
-  var newShowcase = "";
+  curr.history.push(C);
+  var newShowcase = curr.showcase.split("");
 
-  for(var i = 0; i < word.length; i++) {
-    if(word[i] === C) {
-      newShowcase += C + " ";
-    }else {
-      newShowcase += "_ ";
+  for(var i = 0; i < newShowcase.length; i++) {
+    if(newShowcase[i] === '_' && word[i] === C) {
+      newShowcase[i] = C;
     }
   }
 
-  curr.showcase = newShowcase;
+  curr.showcase = newShowcase.join("");
 
   return curr.save();
 }

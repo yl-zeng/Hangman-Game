@@ -27722,14 +27722,19 @@ var Game = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var misses;
 
-      var misses = this.state.history.map(function (h) {
-        return _react2.default.createElement(
-          "span",
-          null,
-          " " + h + ","
-        );
-      });
+      if (this.state.history) {
+        misses = this.state.history.map(function (h) {
+          return _react2.default.createElement(
+            "span",
+            null,
+            " " + h + ","
+          );
+        });
+      } else {
+        misses = _react2.default.createElement("span", null);
+      }
 
       return _react2.default.createElement(
         "div",
@@ -27808,7 +27813,8 @@ var _initialiseProps = function _initialiseProps() {
     $.ajax({
       url: "/word/",
       type: "POST",
-      dataType: "json"
+      dataType: "json",
+      contentType: "application/json"
     }).done(function (data) {
       curr.setState({
         id: data._id,
@@ -27819,6 +27825,7 @@ var _initialiseProps = function _initialiseProps() {
         sessionStorage.setItem('hangmanId', data._id);
       });
     }).fail(function () {
+      console.log(err.responseText);
       console.log("something wrong");
     });
   };
@@ -27829,15 +27836,17 @@ var _initialiseProps = function _initialiseProps() {
     $.ajax({
       url: "/word/" + id,
       type: "GET",
-      dataType: "json"
+      dataType: "json",
+      contentType: "application/json"
     }).done(function (data) {
       curr.setState({
         showcase: data.showcase,
         history: data.history,
         count: data.count
       });
-    }).fail(function () {
-      console.log("something wrong");
+    }).fail(function (err) {
+      console.log(err.responseText);
+      curr.createWord();
     });
   };
 
@@ -27857,8 +27866,8 @@ var _initialiseProps = function _initialiseProps() {
         history: data.history,
         count: data.count
       });
-    }).fail(function () {
-      console.log("something wrong");
+    }).fail(function (err) {
+      console.log(err.responseText);
     });
   };
 
