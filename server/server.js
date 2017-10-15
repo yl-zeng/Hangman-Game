@@ -22,7 +22,7 @@ app.use(function (req, res, next){
 
 app.use(express.static('public'));
 
-app.post("/create", function(req, res) {
+app.post("/word", function(req, res) {
   generateWord().then((word) => {
     res.status(200).send(word);
   }).catch((e) => {

@@ -19,16 +19,40 @@ export default class Game extends React.Component {
 
   componentWillMount() {
     if(this.state.id !== 0) {
-      retrieve();
+      this.retrieveWord();
+    } else {
+      this.createWord();
     }
   }
 
-  retrieve() {
+  createWord() {
+    var curr = this;
+
+    $.ajax({
+      url: "http://localhost:3000/word/",
+      method: "POST",
+      dataType: "json"
+    }).done(function(data) {
+      curr.setState({
+        id: data._id,
+        showcase: data.showcase,
+        history: data.history,
+        count: data.count
+      }, function() {
+        sessionStorage.setItem('hangmanId', data._id);
+      });
+    }).fail(function() {
+      console.log("something wrong");
+    });
+  }
+
+  retrieveWord() {
     var id = this.state.id;
     var curr = this;
     $.ajax({
       url: "http://localhost:3000/word/" + id,
       method: "GET",
+      dataType: "json"
     }).done(function(data) {
       curr.setState({
         showcase: data.showcase,
@@ -39,6 +63,7 @@ export default class Game extends React.Component {
       console.log("something wrong");
     });
   }
+
 
   render() {
 

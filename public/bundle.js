@@ -27716,17 +27716,42 @@ var Game = function (_React$Component) {
     key: "componentWillMount",
     value: function componentWillMount() {
       if (this.state.id !== 0) {
-        retrieve();
+        this.retrieveWord();
+      } else {
+        this.createWord();
       }
     }
   }, {
-    key: "retrieve",
-    value: function retrieve() {
+    key: "createWord",
+    value: function createWord() {
+      var curr = this;
+
+      _jquery2.default.ajax({
+        url: "http://localhost:3000/word/",
+        method: "POST",
+        dataType: "json"
+      }).done(function (data) {
+        curr.setState({
+          id: data._id,
+          showcase: data.showcase,
+          history: data.history,
+          count: data.count
+        }, function () {
+          sessionStorage.setItem('hangmanId', data._id);
+        });
+      }).fail(function () {
+        console.log("something wrong");
+      });
+    }
+  }, {
+    key: "retrieveWord",
+    value: function retrieveWord() {
       var id = this.state.id;
       var curr = this;
       _jquery2.default.ajax({
         url: "http://localhost:3000/word/" + id,
-        method: "GET"
+        method: "GET",
+        dataType: "json"
       }).done(function (data) {
         curr.setState({
           showcase: data.showcase,
