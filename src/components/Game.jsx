@@ -7,8 +7,10 @@ export default class Game extends React.Component {
 
   constructor(props) {
     super(props);
+    var id = sessionStorage.getItem('hangmanId') === null ? 0 : sessionStorage.getItem('hangmanId');
+
     this.state = {
-      id: 0,
+      id,
       showcase: "_ _ _ _ _ _ _",
       history: ["xixi", "haha"],
       count: 0
@@ -16,7 +18,20 @@ export default class Game extends React.Component {
   }
 
   retrieve() {
-
+    var id = this.state.id;
+    var curr = this;
+    $.ajax({
+      url: "http://localhost:3000/word/" + id,
+      method: "GET",
+    }).done(function(data) {
+      curr.setState({
+        showcase: data.showcase,
+        history: data.history,
+        count: data.count
+      })
+    }).fail(function() {
+      console.log("something wrong");
+    });
   }
 
   render() {
@@ -33,6 +48,7 @@ export default class Game extends React.Component {
             <img src="images/0.png"></img>
           </div>
           <div className="col-sm-8" style={{"textAlign":"left"}}>
+            <h1>Id:{this.state.id}</h1>
             <h1>Word:&nbsp;&nbsp;&nbsp;&nbsp;{this.state.showcase}</h1>
             <h1>Misses:{misses}</h1>
           </div>

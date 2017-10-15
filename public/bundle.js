@@ -27701,8 +27701,10 @@ var Game = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Game.__proto__ || Object.getPrototypeOf(Game)).call(this, props));
 
+    var id = sessionStorage.getItem('hangmanId') === null ? 0 : sessionStorage.getItem('hangmanId');
+
     _this.state = {
-      id: 0,
+      id: id,
       showcase: "_ _ _ _ _ _ _",
       history: ["xixi", "haha"],
       count: 0
@@ -27712,7 +27714,22 @@ var Game = function (_React$Component) {
 
   _createClass(Game, [{
     key: "retrieve",
-    value: function retrieve() {}
+    value: function retrieve() {
+      var id = this.state.id;
+      var curr = this;
+      _jquery2.default.ajax({
+        url: "http://localhost:3000/word/" + id,
+        method: "GET"
+      }).done(function (data) {
+        curr.setState({
+          showcase: data.showcase,
+          history: data.history,
+          count: data.count
+        });
+      }).fail(function () {
+        console.log("something wrong");
+      });
+    }
   }, {
     key: "render",
     value: function render() {
@@ -27744,6 +27761,12 @@ var Game = function (_React$Component) {
           _react2.default.createElement(
             "div",
             { className: "col-sm-8", style: { "textAlign": "left" } },
+            _react2.default.createElement(
+              "h1",
+              null,
+              "Id:",
+              this.state.id
+            ),
             _react2.default.createElement(
               "h1",
               null,
