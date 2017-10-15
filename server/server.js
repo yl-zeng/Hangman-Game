@@ -39,11 +39,9 @@ app.post("/guess/:id", function(req, res) {
   }
 
   Word.findById(new ObjectId(id)).then((word) => {
-    word.guess(req.body.input).then((updatedWord) => {
-      res.status(200).send(updatedWord);
-    }).catch((e) => {
-      res.status(403).send();
-    });
+    return word.guess(req.body.input);
+  }).then((updatedWord) => {
+    res.status(200).send(_.pick(updatedWord,["count", "showcase", "history"]));
   }).catch((e) => {
     res.status(404).send({
       error:"cannot update"

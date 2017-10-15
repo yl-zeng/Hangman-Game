@@ -1,9 +1,30 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Link} from 'react-router-dom';
+import $ from 'jquery';
 
-export default class Welcome extends React.Component {
+export default class Game extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: 0,
+      showcase: "_ _ _ _ _ _ _",
+      history: ["xixi", "haha"],
+      count: 0
+    };
+  }
+
+  retrieve() {
+
+  }
+
   render() {
+
+    var misses = this.state.history.map((h) =>
+      <span>{" " + h + ","}</span>
+    );
+
     return (
       <div className="text-center">
         <h1>Game Begins</h1>
@@ -11,8 +32,9 @@ export default class Welcome extends React.Component {
           <div className="col-sm-4">
             <img src="images/0.png"></img>
           </div>
-          <div className="col-sm-8">
-
+          <div className="col-sm-8" style={{"textAlign":"left"}}>
+            <h1>Word:&nbsp;&nbsp;&nbsp;&nbsp;{this.state.showcase}</h1>
+            <h1>Misses:{misses}</h1>
           </div>
         </div>
         <div className="row">
