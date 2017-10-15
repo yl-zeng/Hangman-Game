@@ -30,7 +30,25 @@ app.post("/create", function(req, res) {
   });
 });
 
-app.post("/guess/:id", function(req, res) {
+app.get("/word/:id", function(req, res) {
+  var id = req.params.id;
+
+  if(!ObjectId.isValid(id)) {
+    return res.status(404).send({
+      err: "not found id"
+    });
+  }
+
+  Word.findById(new ObjectId(id)).then((word) => {
+    res.status(200).send(_.pick(word, ["count", "showcase", "history"]));
+  }).catch((e) => {
+    res.status(404).send({
+      err: "something wrong"
+    });
+  });
+});
+
+app.post("/word/:id", function(req, res) {
   var id = req.params.id;
   if(!ObjectId.isValid(id)) {
     return res.status(404).send({
@@ -44,7 +62,7 @@ app.post("/guess/:id", function(req, res) {
     res.status(200).send(_.pick(updatedWord,["count", "showcase", "history"]));
   }).catch((e) => {
     res.status(404).send({
-      error:"cannot update"
+      err:"cannot update"
     });
   });
 });
