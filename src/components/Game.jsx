@@ -12,9 +12,15 @@ export default class Game extends React.Component {
     this.state = {
       id,
       showcase: "_ _ _ _ _ _ _",
-      history: ["xixi", "haha"],
+      history: [],
       count: 0
     };
+  }
+
+  componentWillMount() {
+    if(this.state.id !== 0) {
+      retrieve();
+    }
   }
 
   retrieve() {

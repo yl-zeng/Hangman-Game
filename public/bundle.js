@@ -27706,13 +27706,20 @@ var Game = function (_React$Component) {
     _this.state = {
       id: id,
       showcase: "_ _ _ _ _ _ _",
-      history: ["xixi", "haha"],
+      history: [],
       count: 0
     };
     return _this;
   }
 
   _createClass(Game, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      if (this.state.id !== 0) {
+        retrieve();
+      }
+    }
+  }, {
     key: "retrieve",
     value: function retrieve() {
       var id = this.state.id;
