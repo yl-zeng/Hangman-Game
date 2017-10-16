@@ -8,7 +8,6 @@ export default class Game extends React.Component {
   constructor(props) {
     super(props);
     var id = sessionStorage.getItem('hangmanId') === null ? 0 : sessionStorage.getItem('hangmanId');
-    console.log("constructor");
     this.state = {
       id,
       showcase: "_ _ _ _ _ _ _ ",
@@ -20,7 +19,6 @@ export default class Game extends React.Component {
   }
 
   componentWillMount() {
-    console.log("componentWillMount");
     if(this.state.id !== 0) {
       this.retrieveWord();
     } else {
@@ -68,6 +66,8 @@ export default class Game extends React.Component {
         count: data.count,
         done: data.done,
         win: data.win
+      }, function() {
+        console.log(curr.state);
       })
     }).fail(function(err) {
       console.log(err.responseText);
