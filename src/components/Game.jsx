@@ -1,22 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Link} from 'react-router-dom';
+import history from '../history/history.jsx';
 
 export default class Game extends React.Component {
 
   constructor(props) {
     super(props);
     var id = sessionStorage.getItem('hangmanId') === null ? 0 : sessionStorage.getItem('hangmanId');
-
+    console.log("constructor");
     this.state = {
       id,
       showcase: "_ _ _ _ _ _ _ ",
       history: [],
-      count: 0
+      count: 0,
+      win: false,
+      done: false
     };
   }
 
   componentWillMount() {
+    console.log("componentWillMount");
     if(this.state.id !== 0) {
       this.retrieveWord();
     } else {
@@ -37,7 +41,9 @@ export default class Game extends React.Component {
         id: data._id,
         showcase: data.showcase,
         history: data.history,
-        count: data.count
+        count: data.count,
+        done: data.done,
+        win: data.win
       }, function() {
         sessionStorage.setItem('hangmanId', data._id);
       });
@@ -59,7 +65,9 @@ export default class Game extends React.Component {
       curr.setState({
         showcase: data.showcase,
         history: data.history,
-        count: data.count
+        count: data.count,
+        done: data.done,
+        win: data.win
       })
     }).fail(function(err) {
       console.log(err.responseText);
@@ -69,7 +77,6 @@ export default class Game extends React.Component {
 
   guessWord = (id, guess) => {
     var curr = this;
-    console.log(guess);
 
     $.ajax({
       url: "/word/" + id,
@@ -81,7 +88,9 @@ export default class Game extends React.Component {
       curr.setState({
         showcase: data.showcase,
         history: data.history,
-        count: data.count
+        count: data.count,
+        done: data.done,
+        win: data.win
       })
     }).fail(function(err) {
       console.log(err.responseText);
@@ -96,6 +105,14 @@ export default class Game extends React.Component {
     $("#guess").val("");
 
     this.guessWord(id, data);
+  }
+
+  handleClose = () => {
+    history.goBack();
+  }
+
+  handleRestart = () => {
+    this.createWord();
   }
 
   render() {
@@ -114,7 +131,7 @@ export default class Game extends React.Component {
         <h1>Game Begins</h1>
         <div className="row">
           <div className="col-sm-4">
-            <img src="images/0.png"></img>
+            <img src={"images/" + this.state.count + ".png"}></img>
           </div>
           <div className="col-sm-8" style={{"textAlign":"left"}}>
             <h1>Id:{this.state.id}</h1>
@@ -132,6 +149,27 @@ export default class Game extends React.Component {
             </div>
           </div>
         </div>
+
+        <div className="backdrop" style={{"display":this.state.done ? "block" : "none"}}></div>
+        <div className="modal" tabindex="-1" role="dialog" style={{"display":this.state.done ? "block" : "none"}}>
+            <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <button type="button" className="close" onClick={this.handleClose} data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 className="modal-title">You win</h4>
+                    </div>
+                    <div className="modal-body">
+                        <p>Good Game</p>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-default" onClick={this.handleClose}>Close</button>
+                        <button type="button" className="btn btn-primary" onClick={this.handleRestart}>Restart</button>
+                    </div>
+                </div>
+            </div>
+       </div>
       </div>
     );
   }

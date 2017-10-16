@@ -50,7 +50,7 @@ app.get("/word/:id", function(req, res) {
       return res.status(404).send("Id not found");
     }
 
-    res.status(200).send(_.pick(word, ["count", "showcase", "history"]));
+    res.status(200).send(_.pick(word, ["count", "showcase", "history", "done", "win"]));
   }).catch((e) => {
     res.status(404).send("something wrong");
   });
@@ -73,9 +73,9 @@ app.post("/word/:id", function(req, res) {
 
     return word.guess(req.body.guess);
   }).then((updatedWord) => {
-    res.status(200).send(_.pick(updatedWord,["count", "showcase", "history"]));
+    res.status(200).send(_.pick(updatedWord,["count", "showcase", "history", "done", "win"]));
   }).catch((e) => {
-    res.status(404).send("cannot update");
+    res.status(404).send(e);
   });
 });
 

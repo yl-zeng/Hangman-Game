@@ -27681,6 +27681,10 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouterDom = __webpack_require__(41);
 
+var _history = __webpack_require__(149);
+
+var _history2 = _interopRequireDefault(_history);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27700,12 +27704,14 @@ var Game = function (_React$Component) {
     _initialiseProps.call(_this);
 
     var id = sessionStorage.getItem('hangmanId') === null ? 0 : sessionStorage.getItem('hangmanId');
-
+    console.log("constructor");
     _this.state = {
       id: id,
       showcase: "_ _ _ _ _ _ _ ",
       history: [],
-      count: 0
+      count: 0,
+      win: false,
+      done: false
     };
     return _this;
   }
@@ -27713,6 +27719,7 @@ var Game = function (_React$Component) {
   _createClass(Game, [{
     key: "componentWillMount",
     value: function componentWillMount() {
+      console.log("componentWillMount");
       if (this.state.id !== 0) {
         this.retrieveWord();
       } else {
@@ -27750,7 +27757,7 @@ var Game = function (_React$Component) {
           _react2.default.createElement(
             "div",
             { className: "col-sm-4" },
-            _react2.default.createElement("img", { src: "images/0.png" })
+            _react2.default.createElement("img", { src: "images/" + this.state.count + ".png" })
           ),
           _react2.default.createElement(
             "div",
@@ -27796,6 +27803,60 @@ var Game = function (_React$Component) {
               _react2.default.createElement("input", { id: "guess", type: "text", className: "form-control", placeholder: "One Letter..." })
             )
           )
+        ),
+        _react2.default.createElement("div", { className: "backdrop", style: { "display": this.state.done ? "block" : "none" } }),
+        _react2.default.createElement(
+          "div",
+          { className: "modal", tabindex: "-1", role: "dialog", style: { "display": this.state.done ? "block" : "none" } },
+          _react2.default.createElement(
+            "div",
+            { className: "modal-dialog", role: "document" },
+            _react2.default.createElement(
+              "div",
+              { className: "modal-content" },
+              _react2.default.createElement(
+                "div",
+                { className: "modal-header" },
+                _react2.default.createElement(
+                  "button",
+                  { type: "button", className: "close", onClick: this.handleClose, "data-dismiss": "modal", "aria-label": "Close" },
+                  _react2.default.createElement(
+                    "span",
+                    { "aria-hidden": "true" },
+                    "\xD7"
+                  )
+                ),
+                _react2.default.createElement(
+                  "h4",
+                  { className: "modal-title" },
+                  "You win"
+                )
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "modal-body" },
+                _react2.default.createElement(
+                  "p",
+                  null,
+                  "Good Game"
+                )
+              ),
+              _react2.default.createElement(
+                "div",
+                { className: "modal-footer" },
+                _react2.default.createElement(
+                  "button",
+                  { type: "button", className: "btn btn-default", onClick: this.handleClose },
+                  "Close"
+                ),
+                _react2.default.createElement(
+                  "button",
+                  { type: "button", className: "btn btn-primary", onClick: this.handleRestart },
+                  "Restart"
+                )
+              )
+            )
+          )
         )
       );
     }
@@ -27820,7 +27881,9 @@ var _initialiseProps = function _initialiseProps() {
         id: data._id,
         showcase: data.showcase,
         history: data.history,
-        count: data.count
+        count: data.count,
+        done: data.done,
+        win: data.win
       }, function () {
         sessionStorage.setItem('hangmanId', data._id);
       });
@@ -27842,7 +27905,9 @@ var _initialiseProps = function _initialiseProps() {
       curr.setState({
         showcase: data.showcase,
         history: data.history,
-        count: data.count
+        count: data.count,
+        done: data.done,
+        win: data.win
       });
     }).fail(function (err) {
       console.log(err.responseText);
@@ -27852,7 +27917,6 @@ var _initialiseProps = function _initialiseProps() {
 
   this.guessWord = function (id, guess) {
     var curr = _this2;
-    console.log(guess);
 
     $.ajax({
       url: "/word/" + id,
@@ -27864,7 +27928,9 @@ var _initialiseProps = function _initialiseProps() {
       curr.setState({
         showcase: data.showcase,
         history: data.history,
-        count: data.count
+        count: data.count,
+        done: data.done,
+        win: data.win
       });
     }).fail(function (err) {
       console.log(err.responseText);
@@ -27879,6 +27945,14 @@ var _initialiseProps = function _initialiseProps() {
     $("#guess").val("");
 
     _this2.guessWord(id, data);
+  };
+
+  this.handleClose = function () {
+    _history2.default.goBack();
+  };
+
+  this.handleRestart = function () {
+    _this2.createWord();
   };
 };
 
@@ -27924,7 +27998,7 @@ exports = module.exports = __webpack_require__(242)(undefined);
 
 
 // module
-exports.push([module.i, "* {\r\n  box-sizing: border-box;\r\n}\r\n\r\n.start-button {\r\n  width: 10%;\r\n  margin-top: 5%;\r\n}\r\n\r\n\r\nbody {\r\n  padding-bottom: 40px;\r\n  color: #5a5a5a;\r\n}\r\n", ""]);
+exports.push([module.i, "* {\r\n  box-sizing: border-box;\r\n}\r\n\r\n.start-button {\r\n  width: 10%;\r\n  margin-top: 5%;\r\n}\r\n\r\n\r\nbody {\r\n  padding-bottom: 40px;\r\n  color: #5a5a5a;\r\n}\r\n\r\n.backdrop {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.6);\r\n}\r\n", ""]);
 
 // exports
 

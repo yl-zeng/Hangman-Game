@@ -17,15 +17,20 @@ var wordSchema = new Schema({
   },
   count: Number,
   showcase: String,
-  history: [String]
+  history: [String],
+  done: Boolean,
+  win: Boolean
 });
 
 wordSchema.statics.createWord = function(word) {
+
   var newWord = new Word({
     word,
     count: 0,
     showcase: "_ _ _ _ _ _ _ ",
-    history: []
+    history: [],
+    done: false,
+    win: false
   });
 
   return newWord.save();
@@ -36,21 +41,39 @@ wordSchema.methods.guess = function(c) {
   var word = curr.word;
   var C = c.toUpperCase();
 
-  if(curr.count >= 9) {
+  if(C.length != 1 || C.charCodeAt(0) < 65 || C.charCodeAt(0) > 90)
+    return Promise.reject("invalid input");
+
+  if(curr.done)
     return Promise.reject("game already ended");
-  }
 
-  curr.count += 1;
-  curr.history.push(C);
-  var newShowcase = curr.showcase.split("");
+  if(curr.history.includes(C))
+    return Promise.reject("try another guess");
 
-  for(var i = 0; i < newShowcase.length; i++) {
-    if(newShowcase[i] === '_' && word[i] === C) {
-      newShowcase[i] = C;
+  if(word.includes(C)) {
+    var newShowcase = curr.showcase.split("");
+
+    for(var i = 0; i < newShowcase.length; i++) {
+      if(newShowcase[i] === '_' && word[i] === C) {
+        newShowcase[i] = C;
+      }
     }
+
+    curr.showcase = newShowcase.join("");
+  } else {
+    curr.count += 1;
   }
 
-  curr.showcase = newShowcase.join("");
+  curr.history.push(C);
+
+  if(curr.word === curr.showcase) {
+    curr.win = true;
+    curr.done = true;
+  }
+
+  if(curr.count >= 6) {
+    curr.done = true;
+  }
 
   return curr.save();
 }
